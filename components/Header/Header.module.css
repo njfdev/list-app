@@ -1,0 +1,10 @@
+.spacing {
+    display: flex;
+    gap: 36px;
+}
+
+@media only screen and (max-width: 600px) {
+    .spacing {
+        gap: 18px;
+    }
+}

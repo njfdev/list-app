@@ -1,0 +1,17 @@
+.layout {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-block: 24px;
+    padding-inline: 36px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 600px) {
+    .layout {
+        padding-block: 12px;
+        padding-inline: 24px;
+    }
+}
