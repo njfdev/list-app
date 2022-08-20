@@ -1,6 +1,8 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Dashboard from '../components/pages/Dashboard'
+import SignInPrompt from '../components/SignInPrompt'
 
 const Home: NextPage = () => {
   return (
@@ -10,10 +12,10 @@ const Home: NextPage = () => {
       </Head>
 
       <SignedIn>
-        <h1>You are signed in.</h1>
+        <Dashboard />
       </SignedIn>
       <SignedOut>
-        <h1>You are signed out.</h1>
+        <SignInPrompt />
       </SignedOut>
     </div>
   )
