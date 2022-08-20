@@ -1,8 +1,8 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Dashboard from '../components/pages/Dashboard'
-import SignInPrompt from '../components/SignInPrompt'
+import Dashboard from 'components/pages/Dashboard'
+import SignInPrompt from 'components/SignInPrompt'
 
 const Home: NextPage = () => {
   return (

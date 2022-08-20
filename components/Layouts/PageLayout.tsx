@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import { ReactNode } from "react"
-import { ChildrenProp } from "../../lib/Types"
-import Header from "../Header"
+import { ChildrenProp } from "lib/types"
+import Header from "components/Header"
 
 const PageLayout: NextPage<ChildrenProp> = ({ children }) => {
     return (
