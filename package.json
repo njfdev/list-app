@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.1.0",
+    "@socialgouv/matomo-next": "^1.4.0",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0"
