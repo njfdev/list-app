@@ -1,11 +1,14 @@
-import { NextPage } from "next";
+import Link from "next/link";
 
-const Dashboard: NextPage = () => {
+const Dashboard = () => {
     return (
         <div>
-            <h1>This is the user dashboard!</h1>
+            {/* TODO: Replace this temporary link with an actual UI  */}
+            <Link href="/create-list">
+                <a>Create List</a>
+            </Link>
         </div>
     )
-};
+}
 
 export default Dashboard;
