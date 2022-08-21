@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model TodoList {
+  id          String      @id @default(uuid())
+  owner_id    String      @db.VarChar(32)
+  todos       TodoItem[]
+
+  @@map("todo_lists")
+}
+
+model TodoItem {
+  id        String    @id @default(uuid())
+  list      TodoList  @relation(fields: [list_id], references: [id])
+  list_id   String
+  completed Boolean 
+  task      String
+
+  @@map("todo_items")
+}
