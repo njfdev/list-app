@@ -12,6 +12,7 @@ datasource db {
 model TodoList {
   id          String      @id @default(uuid())
   owner_id    String      @db.VarChar(32)
+  title       String
   todos       TodoItem[]
 
   @@map("todo_lists")
