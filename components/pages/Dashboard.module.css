@@ -1,0 +1,43 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    max-width: 500px;
+    border: solid;
+    border-radius: 20px;
+    border-color: #bdbdbd;
+    overflow: clip;
+
+    background-image: linear-gradient(180deg, #ffffff 50%, #eaeaea 50%);
+    background-repeat: repeat;
+    background-size: 1px 200px;
+}
+
+.box div {
+    display: flex;
+    height: 100px;
+    align-items: center;
+    padding-inline: 1rem;
+    gap: 1rem;
+}
+
+.box div:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.box div:active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .box {
+        margin-inline: 0.5rem;
+        max-width: 600px;
+    }
+}
