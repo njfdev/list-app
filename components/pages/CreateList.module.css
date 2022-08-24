@@ -43,4 +43,5 @@
 .createTodoListButton {
     width: fit-content;
     margin-inline: auto;
+    color: #1f1f1f;
 }
