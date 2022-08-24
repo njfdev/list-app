@@ -4,7 +4,43 @@
     flex-wrap: wrap;
     max-width: 800px;
     gap: 1.5rem;
-    padding-inline: 1.5rem;
     margin-inline: auto;
     height: minmax(100vw, 1fr);
+}
+
+.container {
+    padding-inline: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding-inline: 1rem;
+    }
+}
+
+.createTodoListContainer {
+    margin-inline: auto;
+    width: fit-content;
+}
+
+.createTodoListContainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+.createTodoListContainer form input {
+    background-color: transparent;
+    border: #808080 solid 1px;
+    border-radius: 10px;
+    padding: 0.5rem;
+    padding-inline: 1rem;
+}
+
+.createTodoListContainer form * {
+    font-size: larger;
+}
+
+.createTodoListButton {
+    width: fit-content;
+    margin-inline: auto;
 }

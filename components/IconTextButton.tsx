@@ -5,11 +5,12 @@ import Icon from "@mdi/react"
 interface CreateListButtonProps extends ChildrenProp {
     icon: string;
     iconSize: string;
+    onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-const CreateListButton = ({ children, icon, iconSize }: CreateListButtonProps) => {
+const CreateListButton = ({ children, icon, iconSize, onClick }: CreateListButtonProps) => {
     return (
-        <div className={style.container}>
+        <div className={style.container} onClick={onClick}>
             <Icon path={icon}
                 style={{ width: iconSize, minWidth: iconSize }}
                 className={style.icon} />
