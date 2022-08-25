@@ -14,6 +14,8 @@ const CreateTodoList = async (
     const { userId } = req.auth;
     const { title } = req.body;
 
+    console.log(req.body)
+
     if (!userId) {
         res.status(401).json({ message: "Please login to create a todo list." })
         return;
@@ -25,13 +27,15 @@ const CreateTodoList = async (
     }
 
     try {
-        await prisma.todoList.create({
+        const todo_list = await prisma.todoList.create({
             data: {
                 owner_id: userId,
                 title,
             },
         });
     
+        console.error(todo_list, "umm")
+
         res.status(201).json({ message: 'Todo list has been created.' });
         return;
     } catch (e) {
