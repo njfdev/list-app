@@ -49,7 +49,7 @@ interface ListProp {
 const CreateListPage: NextPage<ListProp> = ({ list }) => {
     return (
         <div>
-            <h1>Create a New Todo for "{list.title}"</h1>
+            <h1>Create a New Todo for &quot;{list.title}&quot;</h1>
             <form action="/api/db/todo-item" method="POST">
                 <label htmlFor="task">Todo Task:</label>
                 <input id="task" name="task" />
