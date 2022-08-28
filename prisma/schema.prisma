@@ -20,7 +20,7 @@ model TodoList {
 
 model TodoItem {
   id        String    @id @default(uuid())
-  list      TodoList  @relation(fields: [list_id], references: [id])
+  list      TodoList  @relation(fields: [list_id], references: [id], onDelete: Cascade)
   list_id   String
   completed Boolean   @default(false)
   task      String
