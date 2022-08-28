@@ -27,14 +27,12 @@ const CreateTodoList = async (
     }
 
     try {
-        const todo_list = await prisma.todoList.create({
+        await prisma.todoList.create({
             data: {
                 owner_id: userId,
                 title,
             },
         });
-    
-        console.error(todo_list, "umm")
 
         res.status(201).json({ message: 'Todo list has been created.' });
         return;
@@ -77,10 +75,15 @@ const DeleteTodoList = async (
     res: NextApiResponse<ResponseData>
 ) => {
     const { userId } = req.auth;
-    const { list_id } = req.body;
+    const { list_id } = JSON.parse(req.body);
 
     if (!userId) {
         res.status(401).json({ message: "Please login to delete your todo list." })
+        return;
+    }
+
+    if (!list_id) {
+        res.status(400).json({ message: "Please provide a todo list to delete." })
         return;
     }
 

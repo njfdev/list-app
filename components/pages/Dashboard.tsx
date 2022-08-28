@@ -16,10 +16,12 @@ const Dashboard: NextPage<ListsProp> = ({ lists }) => {
                     </div>
                 </Link>
                 {lists.map((list) => {
-                    return <div key={list.id}>
-                        <Icon path={mdiFormatListBulleted} size={3} />
-                        <h2>{list.title}</h2>
-                    </div>
+                    return <Link key={list.id} href={`/list?id=${list.id}`}>
+                        <div>
+                            <Icon path={mdiFormatListBulleted} size={3} />
+                            <h2>{list.title}</h2>
+                        </div>
+                    </Link>
                 })}
             </div>
         </div>
