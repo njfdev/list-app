@@ -1,7 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import prisma from "lib/prisma";
 import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { TodoList } from "@prisma/client";
+import { TodoItem, TodoList } from "@prisma/client";
+import { useEffect } from "react";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
@@ -27,31 +29,51 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (
         }
     }
 
+    // User owns list
+    const { todos } = await prisma.todoList.findUniqueOrThrow({
+        where: {
+            id,
+        },
+        select: {
+            todos: true,
+        }
+    })
+
     return {
         props: {
             list,
+            todos,
         },
     }
 });
 
 interface ListProp {
     list: TodoList;
+    todos: any;
 }
 
-const List: NextPage<ListProp> = ({ list }) => {
+const List: NextPage<ListProp> = ({ list, todos }) => {
     const deleteList = async () => {
         const res = await fetch('/api/db/todo-lists', {
             method: 'DELETE',
             body: JSON.stringify({ list_id: list.id }),
-        })
-
-        console.log(res, await res.json())
+        });
     }
 
     return (
         <div>
             <h1>{list.title}</h1>
             <button onClick={deleteList}>Delete List</button>
+            <Link href={`/new-todo?id=${list.id}`}><a>Create New Todo</a></Link>
+            <ol>
+                {todos.map((task: TodoItem) => {
+                    return (
+                        <li key={task.id}>
+                            <p>{task.task}</p>
+                        </li>
+                    )
+                })}
+            </ol>
         </div>
     )
 }
