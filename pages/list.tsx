@@ -4,6 +4,7 @@ import { withServerSideAuth } from "@clerk/nextjs/ssr";
 import { TodoItem, TodoList } from "@prisma/client";
 import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
@@ -53,11 +54,18 @@ interface ListProp {
 }
 
 const List: NextPage<ListProp> = ({ list, todos }) => {
+    const router = useRouter();
+
     const deleteList = async () => {
         const res = await fetch('/api/db/todo-lists', {
             method: 'DELETE',
             body: JSON.stringify({ list_id: list.id }),
         });
+
+        if (res.status === 201) {
+            router.push('/');
+            return;
+        }
     }
 
     return (

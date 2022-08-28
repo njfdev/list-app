@@ -46,7 +46,7 @@ const CreateTodoList = async (
             },
         })
 
-        res.status(201).json({ message: 'Todo list has been created.' });
+        res.redirect(`/list?id=${list_id}`);
         return;
     } catch (e) {
         console.error(e);
