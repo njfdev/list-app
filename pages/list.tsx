@@ -5,6 +5,7 @@ import { TodoItem, TodoList } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Pusher from "pusher-js";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
@@ -114,6 +115,18 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
     useEffect(() => {
         console.log(tasks)
     }, [tasks])
+
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '');
+    const channel = pusher.subscribe(`list-${list.id}`);
+    channel.bind("task-updated", (data) => {
+        const task_index = tasks.findIndex((task => task.id === data.id));
+        let updated_tasks = [...tasks];
+        let updated_task = tasks[task_index];
+        updated_task.completed = data.completed;
+        updated_tasks[task_index] = updated_task;
+
+        setTasks(updated_tasks);
+    })
 
     return (
         <div>

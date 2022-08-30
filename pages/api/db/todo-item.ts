@@ -85,6 +85,25 @@ const UpdateTodoItem = async (
             }
         });
 
+        const Pusher = require("pusher");
+        const pusher = new Pusher({
+            appId: process.env.PUSHER_APP_ID,
+            key: process.env.NEXT_PUBLIC_PUSHER_KEY,
+            secret: process.env.PUSHER_SECRET,
+            cluster: process.env.PUSHER_CLUSTER,
+            useTLS: true,
+        })
+
+        const task = await prisma.todoItem.findUniqueOrThrow({
+            where: {
+                id,
+            },
+        })
+
+        pusher.trigger(`list-${task.list_id}`, "task-updated" , {
+            id, completed
+        });
+
         res.status(200).json({ message: "Task updated", data: { completed } });
         return;
     } catch (e) {
