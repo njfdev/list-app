@@ -118,7 +118,7 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
 
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '');
     const channel = pusher.subscribe(`list-${list.id}`);
-    channel.bind("task-updated", (data) => {
+    channel.bind("task-updated", (data: { id: string, completed: boolean }) => {
         const task_index = tasks.findIndex((task => task.id === data.id));
         let updated_tasks = [...tasks];
         let updated_task = tasks[task_index];
