@@ -100,7 +100,7 @@ const UpdateTodoItem = async (
             },
         })
 
-        pusher.trigger(`list-${task.list_id}`, "task-updated" , {
+        pusher.trigger(`presence-list-${task.list_id}`, "task-updated" , {
             id, completed
         });
 

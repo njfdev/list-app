@@ -5,7 +5,7 @@ import { TodoItem, TodoList } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Pusher from "pusher-js";
+import Pusher, { PresenceChannel } from "pusher-js";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
@@ -56,6 +56,7 @@ interface ListProp {
 
 const List: NextPage<ListProp> = ({ list, todos }) => {
     const [tasks, setTasks] = useState<TodoItem[]>(todos);
+    const [users, setUsers] = useState<any[]>([]);
 
     const router = useRouter();
 
@@ -113,26 +114,46 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
     }
 
     useEffect(() => {
-        console.log(tasks)
-    }, [tasks])
-
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '');
-    const channel = pusher.subscribe(`list-${list.id}`);
-    channel.bind("task-updated", (data: { id: string, completed: boolean }) => {
-        const task_index = tasks.findIndex((task => task.id === data.id));
-        let updated_tasks = [...tasks];
-        let updated_task = tasks[task_index];
-        updated_task.completed = data.completed;
-        updated_tasks[task_index] = updated_task;
-
-        setTasks(updated_tasks);
-    })
+        const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '', { channelAuthorization: { endpoint: "/api/pusher/auth", transport: "ajax" } });
+        const channel = pusher.subscribe(`presence-list-${list.id}`);
+    
+        channel.bind("pusher:subscription_succeeded", function () {
+            let members: any[] = [];
+            console.log("df");
+    
+            // @ts-ignore
+            channel.members.each((member) => {
+                members.push(member);
+            })
+    
+            setUsers(members);
+        })
+    
+        channel.bind("task-updated", (data: { id: string, completed: boolean }) => {
+            const task_index = tasks.findIndex((task => task.id === data.id));
+            let updated_tasks = [...tasks];
+            let updated_task = tasks[task_index];
+            updated_task.completed = data.completed;
+            updated_tasks[task_index] = updated_task;
+    
+            setTasks(updated_tasks);
+        })
+    }, [])
 
     return (
         <div>
             <h1>{list.title}</h1>
             <button onClick={deleteList}>Delete List</button>
             <Link href={`/new-todo?id=${list.id}`}><a>Create New Todo</a></Link>
+
+            <h2>Viewers</h2>
+            <ol>
+                {users.map((member) => {
+                    return <li key={member.id}>{member.info.first_name} {member.info.last_name}</li>
+                })}
+            </ol>
+
+            <h2>Tasks</h2>
             <ol>
                 {tasks.map((task: TodoItem) => {
                     return (
