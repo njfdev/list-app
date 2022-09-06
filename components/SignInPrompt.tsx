@@ -16,6 +16,8 @@ const SignInPrompt: NextPage = () => {
                 Get Started
             </button>
             <p id={style.bottomText}>Already have an account? <Link href="/auth/signin"><b id={style.signInButton}>Sign in</b></Link></p>
+
+            <div style={{ height: `calc(100vh - ${document.documentElement.clientHeight}px` }} />
         </div>
     )
 };
