@@ -6,7 +6,6 @@ import Header from "components/Header/Header"
 const PageLayout = ({ children }: ChildrenProp) => {
     return (
         <div>
-            <Header />
             { children }
         </div>
     )
