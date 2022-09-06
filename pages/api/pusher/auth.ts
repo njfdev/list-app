@@ -1,6 +1,6 @@
 import { Clerk, withAuth, WithAuthProp } from "@clerk/nextjs/api";
 import { NextApiRequest, NextApiResponse } from "next";
-import Pusher from "pusher";
+import Pusher, { PresenceChannelData } from "pusher";
 
 const handler = withAuth(async (
     req: WithAuthProp<NextApiRequest>,
@@ -26,8 +26,14 @@ const handler = withAuth(async (
 
         const userToken = await Clerk.verifyToken(await getToken({ template: "pusher" }) || '');
 
-        const precenseData = {
-            user_id: userToken.id,
+        interface userInfo {
+            first_name: string;
+            last_name: string;
+        }
+
+        const precenseData: PresenceChannelData = {
+        // @ts-ignore
+            user_id: userToken.id || '',
             user_info: {
                 first_name: userToken.first_name,
                 last_name: userToken.last_name,
