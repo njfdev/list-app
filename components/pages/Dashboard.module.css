@@ -33,6 +33,9 @@
 .container {
     box-sizing: border-box;
     width: 100%;
+    padding: 2rem;
+    max-width: 500px;
+    margin-inline: auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -40,4 +43,80 @@
         margin-inline: 0.5rem;
         max-width: 600px;
     }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    font-size: 1.25rem;
+}
+
+.header h3 {
+    font-size: 1rem;
+    color: #666666;
+}
+
+#imageContainer {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#listTitleContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#listTitleContainer button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    color: black;
+    padding-inline: 1rem;
+}
+
+#listTitleContainer button:hover {
+    cursor: pointer;
+}
+
+.list {
+    display: flex;
+    gap: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.list:hover {
+    cursor: pointer;
+}
+
+.listTitle {
+    margin: 0px;
+}
+
+.listDesc {
+    width: fit-content;
+    margin: 0px;
+    color: #666666;
+    font-weight: medium;
+}
+
+.listIcon {
+    height: 80px;
+    min-width: 80px;
+}
+
+#allLists {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
