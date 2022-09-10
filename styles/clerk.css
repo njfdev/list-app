@@ -1,0 +1,6 @@
+/* TODO: Fix ugly circular highlight when clicked (Doesn't show on Safari) */
+.cl-userButtonAvatarBox {
+    border-radius: 1rem;
+    width: 100px;
+    height: 100px;
+}

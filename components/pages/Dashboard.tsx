@@ -24,9 +24,7 @@ const Dashboard: NextPage<ListsProp> = ({ lists }) => {
                         8 tasks today
                     </h3>
                 </div>
-                <div id={style.imageContainer}>
-                    <Image quality={100} priority src={user?.profileImageUrl || ''} layout="fill" objectFit='cover' />
-                </div>
+                <UserButton />
             </div>
             <div id={style.listTitleContainer}>
                 <h2>Lists</h2>
