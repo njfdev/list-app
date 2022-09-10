@@ -10,3 +10,12 @@ export interface ListsProp {
         title: string;
     }[]
 }
+
+export enum AuthType {
+    SignIn = "signin",
+    SignUp = "signup",
+};
+
+export interface AuthProp {
+    type: AuthType;
+};

@@ -1,0 +1,171 @@
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2rem;
+    max-width: 500px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.container h2 {
+    color: #666666;
+    font-weight: 500;
+    font-size: 20px;
+    margin: 0px;
+    padding-inline: 3rem;
+    text-align: center;
+}
+
+.container h1 {
+    margin-block: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .box {
+        margin-inline: 0.5rem;
+        max-width: 600px;
+    }
+}
+
+.authButton {
+    background-color: #ffffff;
+    width: 100%;
+    height: 60px;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.authButton:hover {
+    cursor: pointer;
+    box-shadow: 1px 5px 12px rgba(0,0,0,0.15);
+}
+
+.authButton:active {
+    filter: brightness(98%);
+    box-shadow: 0px 2px 12px rgba(0,0,0,0.1);
+}
+
+.authButton svg {
+    padding-inline: 1.5rem;
+}
+
+.authButton span {
+    font-size: 22px;
+}
+
+#authProviders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#infoText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#dividerContainer {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#dividerContainer * {
+    color: #888888;
+    font-weight: 300;
+}
+
+#dividerContainer hr {
+    width: 100%;
+    background-color: #aaaaaa;
+    border: none;
+    border-radius: 1rem;
+    height: 2px;
+}
+
+#manualAuthContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inputContainer {
+    width: 100%;
+}
+
+.inputContainer input {
+    width: 100%;
+    background-color: #ffffff;
+    width: 100%;
+    height: 50px;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    font-weight: medium;
+    font-size: 1.5rem;
+    padding-inline: 1.25rem;
+    box-sizing: border-box;
+}
+
+.inputContainer input:focus {
+    outline: 2px solid #5f00f6;
+    box-shadow: 2px 8px 12px rgba(0,0,0,0.2) !important;
+}
+
+.inputContainer input:hover {
+    box-shadow: 1px 5px 12px rgba(0,0,0,0.15);
+}
+
+.inputContainer h3 {
+    margin-block: 5px;
+}
+
+#submitButton {
+    width: 100%;
+    background-color: #5f00f6;
+    color: white;
+    width: 100%;
+    height: 50px;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    font-weight: medium;
+    font-size: 1.5rem;
+}
+
+#submitButton:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+}
+
+#submitButton:active {
+    filter: brightness(80%);
+}
+
+#backButton {
+    position: absolute;
+    margin-left: 2rem;
+    margin-top: 1.5rem;
+    font-size: 20px;
+    color: #888888;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+#backButton:hover {
+    cursor: pointer;
+}
