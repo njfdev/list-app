@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   let hasRun = false;
 
   useEffect(() => {
-    console.log("lol")
     if (!hasRun) {
       init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
 
