@@ -18,10 +18,10 @@ const Dashboard: NextPage<ListsProp> = ({ lists }) => {
             <div className={style.header}>
                 <div>
                     <h2>
-                        Welcome, Nicholas
+                        Welcome, {user?.firstName}
                     </h2>
                     <h3>
-                        8 tasks today
+                        {(new Date()).toLocaleDateString()}
                     </h3>
                 </div>
                 <UserButton />
