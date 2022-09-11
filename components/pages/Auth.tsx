@@ -179,6 +179,7 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
     return (
         <>
             <div id={style.backButton} onClick={handleBackButton}><IoMdArrowRoundBack /> <span>Back</span></div>
+            <br />
             <SignedOut>
                 {!signUpAttempt &&
                     <div className={style.container}>
