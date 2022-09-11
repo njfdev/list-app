@@ -122,6 +122,7 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
     const handleBackButton = () => {
         if (signUpAttempt) {
             setSignUp(null);
+            setCode(emptyCode);
         } else {
             router.push("/");
         }
@@ -225,7 +226,29 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
 
                                             const codeNumber = parseInt(e.target.value);
                                             
-                                            const afterValue = Number.isNaN(codeNumber) ? null : codeNumber.toString().length <= 1 ? codeNumber : parseInt(codeNumber.toString().slice(1,2));
+                                            if (Number.isNaN(codeNumber)) {
+                                                setCode({ ...code, [indexValue]: null });
+                                                return;
+                                            };
+
+                                            const additions = codeNumber.toString().slice(code[indexValue]?.toString.length);
+                                            
+                                            if (additions.length > 1) {
+                                                let newCode = code;
+                                                let digitIndex = number;
+                                                for (let i = 0; i < additions.length; i++) {
+                                                    if (digitIndex <= 6) {
+                                                        newCode[`digit${digitIndex}` as keyof typeof code] = parseInt(additions[i]);
+                                                        digitIndex++;
+                                                    }
+                                                }
+
+                                                setCode({ ...newCode });
+                                                document.getElementById(`digit${digitIndex === 7 ? 6 : digitIndex}`)?.focus();
+                                                return;
+                                            }
+
+                                            const afterValue = codeNumber.toString().length <= 1 ? codeNumber : parseInt(codeNumber.toString().slice(1,2));
                                             setCode({ ...code, [indexValue]: afterValue });
 
                                             if (!/^[0-9]+$/.test(e.target.value)) { return; }
