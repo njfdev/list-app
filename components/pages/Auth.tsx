@@ -143,6 +143,7 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
 
                 try {
                     if (signUpAttempt) {
+                        // @ts-ignore
                         const signUpVerification = await signUpAttempt.attemptEmailAddressVerification({ code: numberCode.toString() });
                         setCodeStatus(CodeStatus.Success);
 
