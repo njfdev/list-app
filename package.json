@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^4.1.1",
     "@mdi/js": "^7.0.96",
     "@mdi/react": "^1.6.1",
+    "@openreplay/tracker": "^4.0.1",
     "@prisma/client": "^4.2.1",
     "@sentry/nextjs": "^7.12.1",
     "@socialgouv/matomo-next": "^1.4.0",
