@@ -1,9 +1,8 @@
 import IconTextButton from "components/IconTextButton";
-import { NextPage } from "next";
-import { mdiCartOutline, mdiChevronLeft, mdiFormatListBulleted } from "@mdi/js";
+import {NextPage} from "next";
+import {mdiCartOutline, mdiFormatListBulleted} from "@mdi/js";
 import style from "./CreateList.module.css"
-import { useState } from "react";
-import CreateListButton from "components/IconTextButton";
+import {useState} from "react";
 import BackButton from "components/BackButton";
 
 enum Page {
@@ -18,17 +17,21 @@ const Dashboard: NextPage = () => {
     const ChooseList = () => {
         return (
             <div className={style.grid}>
-                <IconTextButton 
+                <IconTextButton
                     icon={mdiFormatListBulleted}
                     iconSize="25%"
-                    onClick={() => { setPage(Page.CreateTodoList) }}
+                    onClick={() => {
+                        setPage(Page.CreateTodoList)
+                    }}
                 >
                     Create a new todo list. A simple way to check off your tasks.
                 </IconTextButton>
                 <IconTextButton
                     icon={mdiCartOutline}
                     iconSize="25%"
-                    onClick={() => { setPage(Page.CreateShoppingList) }}
+                    onClick={() => {
+                        setPage(Page.CreateShoppingList)
+                    }}
                 >
                     Create a new shopping list to use at the store.
                 </IconTextButton>
@@ -42,9 +45,9 @@ const Dashboard: NextPage = () => {
                 <h1>Create a New Todo List</h1>
                 <form action="/api/db/todo-lists" method="POST">
                     <label htmlFor="title">Todo List Title</label>
-                    <input id="title" name="title" type='text' />
-                    <br />
-                    <input className={style.createTodoListButton} type="submit" value="Create Todo List" />
+                    <input id="title" name="title" type='text'/>
+                    <br/>
+                    <input className={style.createTodoListButton} type="submit" value="Create Todo List"/>
                 </form>
             </div>
         )
@@ -54,17 +57,19 @@ const Dashboard: NextPage = () => {
         <div className={style.container}>
             {
                 page !== Page.ChooseList &&
-                    <BackButton onClick={() => { setPage(Page.ChooseList) }} />
+                <BackButton onClick={() => {
+                    setPage(Page.ChooseList)
+                }}/>
             }
             {
                 page === Page.ChooseList &&
-                    <ChooseList />
+                <ChooseList/>
                 ||
-                    page === Page.CreateTodoList &&
-                        <CreateTodoList />
-                    ||
-                    page === Page.CreateShoppingList &&
-                        <h1>Not Yet Implemented</h1>
+                page === Page.CreateTodoList &&
+                <CreateTodoList/>
+                ||
+                page === Page.CreateShoppingList &&
+                <h1>Not Yet Implemented</h1>
             }
         </div>
     )

@@ -9,6 +9,7 @@
     flex-direction: row;
     gap: 1.5rem;
 }
+
 .container:hover {
     cursor: pointer;
 }
@@ -18,7 +19,7 @@
 }
 
 .text {
-    margin: 0px;
+    margin: 0;
     place-self: center;
     font-size: x-large;
     word-wrap: normal;

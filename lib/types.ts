@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 
 export interface ChildrenProp {
     children: ReactNode;
@@ -14,8 +14,8 @@ export interface ListsProp {
 export enum AuthType {
     SignIn = "signin",
     SignUp = "signup",
-};
+}
 
 export interface AuthProp {
     type: AuthType;
-};
+}

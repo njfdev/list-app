@@ -1,12 +1,9 @@
-import { NextPage } from "next"
-import { ReactNode } from "react"
-import { ChildrenProp } from "lib/types"
-import Header from "components/Header/Header"
+import {ChildrenProp} from "lib/types"
 
-const PageLayout = ({ children }: ChildrenProp) => {
+const PageLayout = ({children}: ChildrenProp) => {
     return (
         <div>
-            { children }
+            {children}
         </div>
     )
 }

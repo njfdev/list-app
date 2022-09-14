@@ -1,4 +1,4 @@
-import { ChildrenProp } from "lib/types";
+import {ChildrenProp} from "lib/types";
 import style from "./IconTextButton.module.css"
 import Icon from "@mdi/react"
 
@@ -8,14 +8,14 @@ interface CreateListButtonProps extends ChildrenProp {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-const CreateListButton = ({ children, icon, iconSize, onClick }: CreateListButtonProps) => {
+const CreateListButton = ({children, icon, iconSize, onClick}: CreateListButtonProps) => {
     return (
         <div className={style.container} onClick={onClick}>
             <Icon path={icon}
-                style={{ width: iconSize, minWidth: iconSize }}
-                className={style.icon} />
+                  style={{width: iconSize, minWidth: iconSize}}
+                  className={style.icon}/>
             <p className={style.text}>
-                { children }
+                {children}
             </p>
         </div>
     )

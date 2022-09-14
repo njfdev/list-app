@@ -1,17 +1,17 @@
-import { GetServerSideProps, NextPage } from "next";
+import {GetServerSideProps, NextPage} from "next";
 import prisma from "lib/prisma";
-import { withServerSideAuth } from "@clerk/nextjs/ssr";
-import { TodoItem, TodoList } from "@prisma/client";
-import { useEffect, useState } from "react";
+import {withServerSideAuth} from "@clerk/nextjs/ssr";
+import {TodoItem, TodoList} from "@prisma/client";
+import {useEffect, useState} from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import Pusher, { PresenceChannel } from "pusher-js";
+import {useRouter} from "next/router";
+import Pusher from "pusher-js";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
-    const { userId } = context.req.auth;
+    const {userId} = context.req.auth;
 
-    if (!id || typeof(id) !== 'string') {
+    if (!id || typeof (id) !== 'string') {
         return {
             notFound: true,
         }
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (
     }
 
     // User owns list
-    const { todos } = await prisma.todoList.findUniqueOrThrow({
+    const {todos} = await prisma.todoList.findUniqueOrThrow({
         where: {
             id,
         },
@@ -54,7 +54,7 @@ interface ListProp {
     todos: any;
 }
 
-const List: NextPage<ListProp> = ({ list, todos }) => {
+const List: NextPage<ListProp> = ({list, todos}) => {
     const [tasks, setTasks] = useState<TodoItem[]>(todos);
     const [users, setUsers] = useState<any[]>([]);
 
@@ -63,7 +63,7 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
     const deleteList = async () => {
         const res = await fetch('/api/db/todo-lists', {
             method: 'DELETE',
-            body: JSON.stringify({ list_id: list.id }),
+            body: JSON.stringify({list_id: list.id}),
         });
 
         if (res.status === 201) {
@@ -114,28 +114,33 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
     }
 
     useEffect(() => {
-        const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '', { channelAuthorization: { endpoint: "/api/pusher/auth", transport: "ajax" } });
+        const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY || '', {
+            channelAuthorization: {
+                endpoint: "/api/pusher/auth",
+                transport: "ajax"
+            }
+        });
         const channel = pusher.subscribe(`presence-list-${list.id}`);
-    
+
         channel.bind("pusher:subscription_succeeded", function () {
             let members: any[] = [];
             console.log("df");
-    
+
             // @ts-ignore
             channel.members.each((member) => {
                 members.push(member);
             })
-    
+
             setUsers(members);
         })
-    
+
         channel.bind("task-updated", (data: { id: string, completed: boolean }) => {
             const task_index = tasks.findIndex((task => task.id === data.id));
             let updated_tasks = [...tasks];
             let updated_task = tasks[task_index];
             updated_task.completed = data.completed;
             updated_tasks[task_index] = updated_task;
-    
+
             setTasks(updated_tasks);
         })
     }, [])
@@ -159,7 +164,8 @@ const List: NextPage<ListProp> = ({ list, todos }) => {
                     return (
                         <li key={task.id}>
                             <label htmlFor={`checkbox-${task.id}`}>{task.task}</label>
-                            <input id={`checkbox-${task.id}`} type="checkbox" checked={task.completed} onChange={() => clickCheckBox(task)} />
+                            <input id={`checkbox-${task.id}`} type="checkbox" checked={task.completed}
+                                   onChange={() => clickCheckBox(task)}/>
                         </li>
                     )
                 })}

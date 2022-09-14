@@ -1,26 +1,26 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { withAuth, WithAuthProp } from "@clerk/nextjs/api";
+import type {NextApiRequest, NextApiResponse} from 'next'
+import {withAuth, WithAuthProp} from "@clerk/nextjs/api";
 import prisma from "lib/prisma";
 
 type ResponseData = {
-  message: string,
-  data?: any,
+    message: string,
+    data?: any,
 }
 
 const CreateTodoItem = async (
     req: WithAuthProp<NextApiRequest>,
     res: NextApiResponse<ResponseData>
 ) => {
-    const { userId } = req.auth;
-    const { task, list_id } = req.body;
+    const {userId} = req.auth;
+    const {task, list_id} = req.body;
 
     if (!userId) {
-        res.status(401).json({ message: "Please login to create a todo list." })
+        res.status(401).json({message: "Please login to create a todo list."})
         return;
     }
 
     if (!task) {
-        res.status(400).json({ message: "Please provide a task for your todo." })
+        res.status(400).json({message: "Please provide a task for your todo."})
         return;
     }
 
@@ -32,7 +32,7 @@ const CreateTodoItem = async (
         });
 
         if (list.owner_id !== userId) {
-            res.status(401).json({ message: "You do not have permission to do this." });
+            res.status(401).json({message: "You do not have permission to do this."});
             return;
         }
 
@@ -41,7 +41,7 @@ const CreateTodoItem = async (
             data: {
                 task,
                 list: {
-                    connect: { id: list_id },
+                    connect: {id: list_id},
                 },
             },
         })
@@ -50,7 +50,7 @@ const CreateTodoItem = async (
         return;
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: "An error occurred when creating your list, please try again." });
+        res.status(500).json({message: "An error occurred when creating your list, please try again."});
         return;
     }
 }
@@ -59,16 +59,16 @@ const UpdateTodoItem = async (
     req: WithAuthProp<NextApiRequest>,
     res: NextApiResponse<ResponseData>
 ) => {
-    const { userId } = req.auth;
-    const { id, completed } = req.body;
+    const {userId} = req.auth;
+    const {id, completed} = req.body;
 
     if (!userId) {
-        res.status(401).json({ message: "Please login to update a todo list." })
+        res.status(401).json({message: "Please login to update a todo list."})
         return;
     }
 
     if (!id || completed === undefined || completed === null) {
-        res.status(400).json({ message: "Please provide the id of the task to update and the value to update." })
+        res.status(400).json({message: "Please provide the id of the task to update and the value to update."})
         return;
     }
 
@@ -100,15 +100,15 @@ const UpdateTodoItem = async (
             },
         })
 
-        pusher.trigger(`presence-list-${task.list_id}`, "task-updated" , {
+        pusher.trigger(`presence-list-${task.list_id}`, "task-updated", {
             id, completed
         });
 
-        res.status(200).json({ message: "Task updated", data: { completed } });
+        res.status(200).json({message: "Task updated", data: {completed}});
         return;
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: "An error occurred when creating your list, please try again." });
+        res.status(500).json({message: "An error occurred when creating your list, please try again."});
         return;
     }
 }
@@ -117,17 +117,17 @@ const GetAllTodoItems = async (
     req: WithAuthProp<NextApiRequest>,
     res: NextApiResponse<ResponseData>
 ) => {
-    const { userId } = req.auth;
+    const {userId} = req.auth;
     console.log(req.query)
-    const { list_id } = req.body;
+    const {list_id} = req.body;
 
     if (!userId) {
-        res.status(401).json({ message: "Please login to update a todo list." })
+        res.status(401).json({message: "Please login to update a todo list."})
         return;
     }
 
     if (!list_id) {
-        res.status(400).json({ message: "Please provide the list id to get the tasks from." })
+        res.status(400).json({message: "Please provide the list id to get the tasks from."})
         return;
     }
 
@@ -138,11 +138,11 @@ const GetAllTodoItems = async (
             },
         });
 
-        res.status(200).json({ message: "Tasks Retrieved", data: tasks });
+        res.status(200).json({message: "Tasks Retrieved", data: tasks});
         return;
     } catch (e) {
         console.error(e);
-        res.status(500).json({ message: "An error occurred when creating your list, please try again." });
+        res.status(500).json({message: "An error occurred when creating your list, please try again."});
         return;
     }
 }

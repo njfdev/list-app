@@ -1,12 +1,10 @@
-import { SignIn } from "@clerk/nextjs";
 import AuthPage from "components/pages/Auth";
-import { AuthType } from "lib/types";
-import { NextPage } from "next";
-import style from "styles/SignInPage.module.css"
+import {AuthType} from "lib/types";
+import {NextPage} from "next";
 
 const SignInPage: NextPage = () => {
     return (
-        <AuthPage type={AuthType.SignIn} />
+        <AuthPage type={AuthType.SignIn}/>
     )
 }
 

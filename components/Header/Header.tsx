@@ -1,15 +1,14 @@
-import { NextPage } from "next";
 import HeaderLayout from "components/Layouts/HeaderLayout"
 import style from "./Header.module.css"
 import HeaderLink from "./HeaderLink";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
 
 const Header = () => {
     return (
         <HeaderLayout>
             <HeaderLink href="/">NJF Lists</HeaderLink>
             <SignedIn>
-                <UserButton />
+                <UserButton/>
             </SignedIn>
             <SignedOut>
                 <div className={style.spacing}>

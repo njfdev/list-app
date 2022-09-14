@@ -1,10 +1,10 @@
-import { ChildrenProp } from "lib/types"
+import {ChildrenProp} from "lib/types"
 import styles from "./HeaderLayout.module.css"
 
-const HeaderLayout = ({ children }: ChildrenProp) => {
+const HeaderLayout = ({children}: ChildrenProp) => {
     return (
         <div className={styles.layout}>
-            { children }
+            {children}
         </div>
     )
 }

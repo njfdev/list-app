@@ -1,11 +1,10 @@
 import AuthPage from "components/pages/Auth";
-import { AuthType } from "lib/types";
-import { NextPage } from "next";
-import style from "styles/SignUpPage.module.css"
+import {AuthType} from "lib/types";
+import {NextPage} from "next";
 
 const SignUpPage: NextPage = () => {
     return (
-        <AuthPage type={AuthType.SignUp} />
+        <AuthPage type={AuthType.SignUp}/>
     )
 }
 

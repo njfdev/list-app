@@ -1,18 +1,14 @@
-import { mdiPlusCircle, mdiCartOutline, mdiFormatListBulleted } from '@mdi/js';
 import style from "./Auth.module.css";
-import Icon from "@mdi/react";
-import Link from "next/link";
-import { AuthProp, AuthType, ListsProp } from 'lib/types';
-import { NextPage } from 'next';
-import { AuthenticateWithRedirectCallback, RedirectToUserProfile, SignedIn, SignedOut, UserButton, useSignIn, useSignUp, useUser } from '@clerk/nextjs';
-import React, { Children, DetailedHTMLProps, InputHTMLAttributes, ReactElement, ReactEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { SiApple, SiGoogle, SiMicrosoft } from 'react-icons/si';
-import { IconType } from 'react-icons';
-import { IoMdArrowRoundBack } from 'react-icons/io'
-import { OAuthStrategy } from '@clerk/backend-core';
-import { ClerkAPIError } from '@clerk/types';
+import {AuthProp, AuthType} from 'lib/types';
+import {NextPage} from 'next';
+import {RedirectToUserProfile, SignedIn, SignedOut, useSignIn, useSignUp} from '@clerk/nextjs';
+import React, {DetailedHTMLProps, InputHTMLAttributes, useEffect, useRef, useState} from 'react';
+import {useRouter} from 'next/router';
+import {SiApple, SiGoogle, SiMicrosoft} from 'react-icons/si';
+import {IconType} from 'react-icons';
+import {IoMdArrowRoundBack} from 'react-icons/io'
+import {OAuthStrategy} from '@clerk/backend-core';
+import {ClerkAPIError} from '@clerk/types';
 import readingTime from "reading-time";
 
 interface AuthProps {
@@ -31,11 +27,11 @@ interface Numbers {
 }
 
 const emptyCode: Numbers = {
-    digit0: null, 
-    digit1: null, 
-    digit2: null, 
-    digit3: null, 
-    digit4: null, 
+    digit0: null,
+    digit1: null,
+    digit2: null,
+    digit3: null,
+    digit4: null,
     digit5: null
 }
 
@@ -44,8 +40,8 @@ enum CodeStatus {
     Error,
 }
 
-const AuthPage: NextPage<AuthProp> = ({ type }) => {
-    const [form, setForm] = useState<AuthProps>({ name: "", email: "", password: "" });
+const AuthPage: NextPage<AuthProp> = ({type}) => {
+    const [form, setForm] = useState<AuthProps>({name: "", email: "", password: ""});
     const [code, setCode] = useState<Numbers>(emptyCode);
     const [error, setError] = useState<string | null>(null);
     const [verifyError, setVerifyError] = useState<string | null>(null);
@@ -110,7 +106,9 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
                     identifier: form.email,
                     password: form.password,
                 })
-                auth.setSession(res.createdSessionId, () => { router.push("/") });
+                auth.setSession(res.createdSessionId, () => {
+                    router.push("/")
+                });
             } catch (e) {
                 console.log(e)
             }
@@ -145,18 +143,20 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
                 try {
                     if (signUpAttempt) {
                         // @ts-ignore
-                        const signUpVerification = await signUpAttempt.attemptEmailAddressVerification({ code: numberCode.toString() });
+                        const signUpVerification = await signUpAttempt.attemptEmailAddressVerification({code: numberCode.toString()});
                         setCodeStatus(CodeStatus.Success);
 
                         await new Promise(callback => setInterval(callback, 1500));
 
-                        auth.setSession(signUpVerification.createdSessionId, () => { router.push("/") });
+                        auth.setSession(signUpVerification.createdSessionId, () => {
+                            router.push("/")
+                        });
                     } else {
-                        throw "SignUpAttempt object is null"; 
+                        throw "SignUpAttempt object is null";
                     }
                 } catch (e) {
                     const error = (e as { errors: ClerkAPIError[] }).errors[0];
-                    
+
                     setVerifyError(error.longMessage || null);
                     setCodeStatus(CodeStatus.Error);
 
@@ -180,8 +180,8 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
 
     return (
         <>
-            <div id={style.backButton} onClick={handleBackButton}><IoMdArrowRoundBack /> <span>Back</span></div>
-            <br />
+            <div id={style.backButton} onClick={handleBackButton}><IoMdArrowRoundBack/> <span>Back</span></div>
+            <br/>
             <SignedOut>
                 {!signUpAttempt &&
                     <div className={style.container}>
@@ -189,18 +189,22 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
                             <h1>{actionCaps}</h1>
                             <h2>Create a new account for njf lists.</h2>
                         </div>
-                        <AuthProviders action={action} auth={auth} type={type} />
+                        <AuthProviders action={action} auth={auth} type={type}/>
                         <div id={style.dividerContainer}>
                             <hr/>
                             <span>or</span>
                             <hr/>
                         </div>
                         <form onSubmit={handleAuthAction} id={style.manualAuthContainer}>
-                            {type === AuthType.SignUp && <AuthInput placeholder='John Doe' id="name" name="name" pattern="^[a-zA-Z]+ [a-zA-Z]+$" value={form.name} onChange={handleInputChange}>Full Name</AuthInput>}
-                            <AuthInput type="email" placeholder='example@mail.com' id="email" name="email" value={form.email} onChange={handleInputChange}>Email</AuthInput>
-                            <AuthInput type="password" placeholder='At least 8 characters' id="password" name="password" value={form.password} onChange={handleInputChange}>Password</AuthInput>
+                            {type === AuthType.SignUp &&
+                                <AuthInput placeholder='John Doe' id="name" name="name" pattern="^[a-zA-Z]+ [a-zA-Z]+$"
+                                           value={form.name} onChange={handleInputChange}>Full Name</AuthInput>}
+                            <AuthInput type="email" placeholder='example@mail.com' id="email" name="email"
+                                       value={form.email} onChange={handleInputChange}>Email</AuthInput>
+                            <AuthInput type="password" placeholder='At least 8 characters' id="password" name="password"
+                                       value={form.password} onChange={handleInputChange}>Password</AuthInput>
                             {error && <span id={style.errorMessage}>{error}</span>}
-                            <input id={style.submitButton} type="submit" value={actionCaps} />
+                            <input id={style.submitButton} type="submit" value={actionCaps}/>
                         </form>
                     </div> ||
                     <div className={style.container}>
@@ -213,67 +217,69 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
 
                                     // @ts-ignore
                                     return <input ref={number === 0 ? digit0Ref : undefined}
-                                        autoFocus={number === 0} disabled={disabled}
-                                        pattern='\d*'
-                                        id={indexValue}
-                                        key={number}
-                                        className={style.authCodeInput}
-                                        // @ts-ignore
-                                        value={code[indexValue] !== null ? code[indexValue] : ""}
-                                        style={{ borderColor: codeStatus !== null ? codeStatus === CodeStatus.Success ? "#00bb00" : "red" : "transparent" }}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                            e.preventDefault();
+                                                  autoFocus={number === 0} disabled={disabled}
+                                                  pattern='\d*'
+                                                  id={indexValue}
+                                                  key={number}
+                                                  className={style.authCodeInput}
+                                                  // @ts-ignore
+                                                  value={code[indexValue] !== null ? code[indexValue] : ""}
+                                                  style={{borderColor: codeStatus !== null ? codeStatus === CodeStatus.Success ? "#00bb00" : "red" : "transparent"}}
+                                                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                      e.preventDefault();
 
-                                            const codeNumber = parseInt(e.target.value);
-                                            
-                                            if (Number.isNaN(codeNumber)) {
-                                                setCode({ ...code, [indexValue]: null });
-                                                return;
-                                            };
+                                                      const codeNumber = parseInt(e.target.value);
 
-                                            const additions = codeNumber.toString().slice(code[indexValue]?.toString.length);
-                                            
-                                            if (additions.length > 1) {
-                                                let newCode = code;
-                                                let digitIndex = number;
-                                                for (let i = 0; i < additions.length; i++) {
-                                                    if (digitIndex <= 6) {
-                                                        newCode[`digit${digitIndex}` as keyof typeof code] = parseInt(additions[i]);
-                                                        digitIndex++;
-                                                    }
-                                                }
+                                                      if (Number.isNaN(codeNumber)) {
+                                                          setCode({...code, [indexValue]: null});
+                                                          return;
+                                                      }
 
-                                                setCode({ ...newCode });
-                                                document.getElementById(`digit${digitIndex === 7 ? 6 : digitIndex}`)?.focus();
-                                                return;
-                                            }
+                                                      const additions = codeNumber.toString().slice(code[indexValue]?.toString.length);
 
-                                            const afterValue = codeNumber.toString().length <= 1 ? codeNumber : parseInt(codeNumber.toString().slice(1,2));
-                                            setCode({ ...code, [indexValue]: afterValue });
+                                                      if (additions.length > 1) {
+                                                          let newCode = code;
+                                                          let digitIndex = number;
+                                                          for (let i = 0; i < additions.length; i++) {
+                                                              if (digitIndex <= 6) {
+                                                                  newCode[`digit${digitIndex}` as keyof typeof code] = parseInt(additions[i]);
+                                                                  digitIndex++;
+                                                              }
+                                                          }
 
-                                            if (!/^[0-9]+$/.test(e.target.value)) { return; }
-                                            // @ts-ignore
-                                            e.target.nextElementSibling?.focus();
-                                        }} 
-                                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                                            if (e.key === "Backspace" && code[indexValue] === null) {
-                                                // @ts-ignore
-                                                e.target.previousSibling?.focus();
-                                            } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-                                                e.preventDefault();
-                                                // @ts-ignore
-                                                e.target.nextElementSibling?.focus();
-                                            } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-                                                e.preventDefault();
-                                                // @ts-ignore
-                                                e.target.previousSibling?.focus();
-                                            }
-                                        }}
-                                        onMouseDown={(e: React.MouseEvent<HTMLInputElement>) => {
-                                            e.preventDefault();
-                                            e.currentTarget.focus()
-                                            e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length);
-                                        }} />
+                                                          setCode({...newCode});
+                                                          document.getElementById(`digit${digitIndex === 7 ? 6 : digitIndex}`)?.focus();
+                                                          return;
+                                                      }
+
+                                                      const afterValue = codeNumber.toString().length <= 1 ? codeNumber : parseInt(codeNumber.toString().slice(1, 2));
+                                                      setCode({...code, [indexValue]: afterValue});
+
+                                                      if (!/^[0-9]+$/.test(e.target.value)) {
+                                                          return;
+                                                      }
+                                                      // @ts-ignore
+                                                      e.target.nextElementSibling?.focus();
+                                                  }}
+                                                  onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                                                      if (e.key === "Backspace" && code[indexValue] === null) {
+                                                          // @ts-ignore
+                                                          e.target.previousSibling?.focus();
+                                                      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                                                          e.preventDefault();
+                                                          // @ts-ignore
+                                                          e.target.nextElementSibling?.focus();
+                                                      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                                                          e.preventDefault();
+                                                          // @ts-ignore
+                                                          e.target.previousSibling?.focus();
+                                                      }
+                                                  }}
+                                                  onMouseDown={(e: React.MouseEvent<HTMLInputElement>) => {
+                                                      e.preventDefault();
+                                                      e.currentTarget.focus()
+                                                      e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length);
+                                                  }}/>
                                 })
                             }
                         </div>
@@ -282,7 +288,7 @@ const AuthPage: NextPage<AuthProp> = ({ type }) => {
                 }
             </SignedOut>
             <SignedIn>
-                <RedirectToUserProfile />
+                <RedirectToUserProfile/>
             </SignedIn>
         </>
     )
@@ -294,11 +300,11 @@ interface ProviderType {
     strategy: OAuthStrategy;
 }
 
-const AuthProviders: NextPage<{ action: string, auth: any, type: AuthType }> = ({ action, type, auth }) => {
+const AuthProviders: NextPage<{ action: string, auth: any, type: AuthType }> = ({action, type, auth}) => {
     const providers: ProviderType[] = [
-        { name: "Apple", icon: SiApple, strategy: "oauth_apple" },
-        { name: "Google", icon: SiGoogle, strategy: "oauth_google" },
-        { name: "Microsoft", icon: SiMicrosoft, strategy: "oauth_microsoft" },
+        {name: "Apple", icon: SiApple, strategy: "oauth_apple"},
+        {name: "Google", icon: SiGoogle, strategy: "oauth_google"},
+        {name: "Microsoft", icon: SiMicrosoft, strategy: "oauth_microsoft"},
     ]
 
     const handleSocialAuth = (authStrategy: OAuthStrategy) => {
@@ -321,7 +327,7 @@ const AuthProviders: NextPage<{ action: string, auth: any, type: AuthType }> = (
                         action={action}
                         provider={provider.name}
                         providerIcon={provider.icon}
-                        key={provider.name} 
+                        key={provider.name}
                         onClick={() => handleSocialAuth(provider.strategy)}/>
                 )
             })}
@@ -329,20 +335,36 @@ const AuthProviders: NextPage<{ action: string, auth: any, type: AuthType }> = (
     )
 }
 
-const AuthButton: NextPage<{ action: string, provider: string, providerIcon: IconType, key: string, onClick: React.MouseEventHandler<HTMLDivElement> }> = ({ action, provider, providerIcon, key, onClick }) => {
+const AuthButton: NextPage<{ action: string, provider: string, providerIcon: IconType, key: string, onClick: React.MouseEventHandler<HTMLDivElement> }> = ({
+                                                                                                                                                               action,
+                                                                                                                                                               provider,
+                                                                                                                                                               providerIcon,
+                                                                                                                                                               key,
+                                                                                                                                                               onClick
+                                                                                                                                                           }) => {
     return (
         <div className={style.authButton} key={key} onClick={onClick}>
-            {providerIcon({ size: "2rem" })}
+            {providerIcon({size: "2rem"})}
             <span>{action} with {provider}</span>
         </div>
     )
 }
 
-const AuthInput: NextPage<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>> = ({ children, placeholder, type, id, value, onChange, name, pattern }) => {
+const AuthInput: NextPage<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>> = ({
+                                                                                                             children,
+                                                                                                             placeholder,
+                                                                                                             type,
+                                                                                                             id,
+                                                                                                             value,
+                                                                                                             onChange,
+                                                                                                             name,
+                                                                                                             pattern
+                                                                                                         }) => {
     return (
         <div className={style.inputContainer}>
             <label htmlFor={id}>{children}</label>
-            <input id={id} type={type} minLength={type === "password" ? 8 : undefined} placeholder={placeholder} value={value} onChange={onChange} name={name} required pattern={pattern} />
+            <input id={id} type={type} minLength={type === "password" ? 8 : undefined} placeholder={placeholder}
+                   value={value} onChange={onChange} name={name} required pattern={pattern}/>
         </div>
     )
 }
