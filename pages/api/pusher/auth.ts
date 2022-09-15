@@ -1,6 +1,7 @@
 import {Clerk, withAuth, WithAuthProp} from "@clerk/nextjs/api";
 import {NextApiRequest, NextApiResponse} from "next";
 import Pusher, {PresenceChannelData} from "pusher";
+import prisma from "lib/prisma";
 
 const handler = withAuth(async (
     req: WithAuthProp<NextApiRequest>,
@@ -25,11 +26,6 @@ const handler = withAuth(async (
         }
 
         const userToken = await Clerk.verifyToken(await getToken({template: "pusher"}) || '');
-
-        interface userInfo {
-            first_name: string;
-            last_name: string;
-        }
 
         const precenseData: PresenceChannelData = {
             // @ts-ignore

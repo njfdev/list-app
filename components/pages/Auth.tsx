@@ -222,7 +222,7 @@ const AuthPage: NextPage<AuthProp> = ({type}) => {
                                                   id={indexValue}
                                                   key={number}
                                                   className={style.authCodeInput}
-                                                  // @ts-ignore
+                                        // @ts-ignore
                                                   value={code[indexValue] !== null ? code[indexValue] : ""}
                                                   style={{borderColor: codeStatus !== null ? codeStatus === CodeStatus.Success ? "#00bb00" : "red" : "transparent"}}
                                                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

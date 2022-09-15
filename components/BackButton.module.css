@@ -3,16 +3,15 @@
     align-items: center;
     text-align: center;
     background-color: transparent;
-    border: none;
     cursor: pointer;
     padding-right: 1rem;
-    padding-left: 0px;
+    padding-left: 0;
     border: #eaeaea solid 1px;
     border-radius: 10px;
     color: #1f1f1f;
 }
 
 .button p {
-    margin: 0px;
+    margin: 0;
     font-size: 1.5rem;
 }

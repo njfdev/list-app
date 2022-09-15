@@ -3,9 +3,8 @@
     flex-direction: column;
     margin-inline: auto;
     max-width: 500px;
-    border: solid;
+    border: solid #bdbdbd;
     border-radius: 20px;
-    border-color: #bdbdbd;
     overflow: clip;
 
     background-image: linear-gradient(180deg, #ffffff 50%, #eaeaea 50%);

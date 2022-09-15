@@ -143,7 +143,7 @@ const List: NextPage<ListProp> = ({list, todos}) => {
 
             setTasks(updated_tasks);
         })
-    }, [])
+    });
 
     return (
         <div>

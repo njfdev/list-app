@@ -1,6 +1,7 @@
 import {mdiChevronLeft} from "@mdi/js";
 import Icon from "@mdi/react";
 import style from "./BackButton.module.css"
+import React from "react";
 
 interface BackButtonProps {
     onClick: React.MouseEventHandler<HTMLButtonElement>;

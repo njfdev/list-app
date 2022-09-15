@@ -1,6 +1,7 @@
 import {ChildrenProp} from "lib/types";
 import style from "./IconTextButton.module.css"
 import Icon from "@mdi/react"
+import React from "react";
 
 interface CreateListButtonProps extends ChildrenProp {
     icon: string;
