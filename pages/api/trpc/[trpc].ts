@@ -14,8 +14,6 @@ export const appRouter = trpc
             // @ts-ignore
             const {userId} = ctx.req.auth;
 
-            console.log("epic");
-
             if (!userId) {
                 return {
                     noAuth: true,

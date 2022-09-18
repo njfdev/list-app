@@ -23,6 +23,7 @@
     "@trpc/server": "^9.27.2",
     "axios": "^0.27.2",
     "next": "^12.3.0",
+    "next-axiom": "^0.14.0",
     "pusher": "^5.1.1-beta",
     "pusher-js": "^7.4.0",
     "react": "^18.2.0",

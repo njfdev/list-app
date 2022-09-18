@@ -1,4 +1,5 @@
 const {withSentryConfig} = require('@sentry/nextjs');
+const {withAxiom} = require('next-axiom');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,4 +17,4 @@ const sentryWebpackPluginOptions = {
     silent: true, // Suppresses all logs
 };
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+module.exports = withAxiom(withSentryConfig(nextConfig, sentryWebpackPluginOptions));

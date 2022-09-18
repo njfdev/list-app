@@ -10,6 +10,8 @@ import Tracker from "@openreplay/tracker";
 import {AppRouter} from "pages/api/trpc/[trpc]";
 import {withTRPC} from "@trpc/next";
 
+export { reportWebVitals } from 'next-axiom';
+
 // Using the or operator so Typescript doesn't complain because env variables might be undefined sometimes
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL || '';
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID || '';

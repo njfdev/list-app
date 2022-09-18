@@ -30,7 +30,6 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(
 );
 
 const Home: NextPage = ({ lists, noAuth }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    console.log({ lists, noAuth });
     return (
         <div>
             <Head>
