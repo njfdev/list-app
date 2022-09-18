@@ -9,6 +9,7 @@ import {useRouter} from 'next/router';
 import {trpc} from "../../lib/trpc";
 import {useEffect, useState} from "react";
 import {TodoList} from "@prisma/client";
+import PageLayout from "../Layouts/PageLayout";
 
 const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
     const {user} = useUser();
@@ -19,18 +20,16 @@ const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
     ]);
 
     return (
-        <div className={style.container}>
-            <div className={style.header}>
-                <div>
-                    <h2>
-                        Welcome, {user?.firstName}
-                    </h2>
-                    <h3>
-                        {(new Date()).toLocaleDateString()}
-                    </h3>
-                </div>
-                <UserButton/>
-            </div>
+        <PageLayout header={
+            <>
+                <h2>
+                    Welcome, {user?.firstName}
+                </h2>
+                <h3>
+            {(new Date()).toLocaleDateString()}
+                </h3>
+            </>
+        }>
             <div id={style.listTitleContainer}>
                 <h2>Lists</h2>
                 <button onClick={() => router.push("/create-list")}>+</button>
@@ -49,7 +48,7 @@ const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
                     </Link>
                 })}
             </div>
-        </div>
+        </PageLayout>
     )
 }
 

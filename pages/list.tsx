@@ -8,6 +8,11 @@ import {useRouter} from "next/router";
 import Pusher from "pusher-js";
 import {createSSGHelpers} from "@trpc/react/ssg";
 import {appRouter} from "./api/trpc/[trpc]";
+import PageLayout from "../components/Layouts/PageLayout";
+import style from "styles/List.module.css";
+import {BsCheckLg} from "react-icons/bs";
+import {input} from "zod";
+import {TbClipboardText} from "react-icons/tb";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (ctx) => {
     const list_id = ctx.query.id;
@@ -143,10 +148,16 @@ const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSide
         }, []);
 
         return (
-            <div>
-                <h1>{list.title}</h1>
+            <PageLayout header={
+                <>
+                    <h2 style={{ margin: "0" }}>{list.title}</h2>
+                    <h3 style={{ margin: "0", color: "#666666", fontSize: "auto", fontWeight: "normal" }}>
+                        Ipsum dolore nisi officia mollit ea sint esse culpa reprehenderit
+                        deserunt quis irure cillum.
+                    </h3>
+                </>
+            }>
                 <button onClick={deleteList}>Delete List</button>
-                <Link href={`/new-todo?id=${list.id}`}><a>Create New Todo</a></Link>
 
                 <h2>Viewers</h2>
                 <ol>
@@ -155,19 +166,28 @@ const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSide
                     })}
                 </ol>
 
-                <h2>Tasks</h2>
-                <ol>
+                <div id={style.listTitleContainer}>
+                    <h2>Tasks</h2>
+                    <Link href={`/new-todo?id=${list.id}`}>
+                        <button>+</button>
+                    </Link>
+                </div>
+                <ol id={style.list}>
                     {tasks.map((task: TodoItem) => {
                         return (
-                            <li key={task.id}>
+                            <li className={style.task} key={task.id}>
+                                <TbClipboardText className={style.icon} />
                                 <label htmlFor={`checkbox-${task.id}`}>{task.task}</label>
-                                <input id={`checkbox-${task.id}`} type="checkbox" checked={task.completed}
-                                       onChange={() => clickCheckBox(task)}/>
+                                <div>
+                                    <input id={`checkbox-${task.id}`} type="checkbox" checked={task.completed}
+                                           onChange={() => clickCheckBox(task)}/>
+                                    {task.completed && <BsCheckLg className={style.checkmark} />}
+                                </div>
                             </li>
                         )
                     })}
                 </ol>
-            </div>
+            </PageLayout>
         )
     } else {
         return <h1>loading</h1>
