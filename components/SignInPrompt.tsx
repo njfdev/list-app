@@ -18,7 +18,7 @@ const SignInPrompt: NextPage = () => {
             <p id={style.bottomText}>Already have an account? <Link href="/auth/signin"><b id={style.signInButton}>Sign
                 in</b></Link></p>
 
-            <div style={{height: `calc(100vh - ${typeof window !== "undefined" ? document.documentElement.clientHeight : 0}px`}}/>
+            <div suppressHydrationWarning style={{height: `calc(100vh - ${typeof window !== "undefined" ? document.documentElement.clientHeight + "px" : "100vh"})`}}/>
         </div>
     )
 };
