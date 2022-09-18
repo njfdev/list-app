@@ -45,7 +45,8 @@ function MyApp({Component, pageProps}: AppProps) {
 
 export default withTRPC<AppRouter>({
     config({ ctx }) {
-        const url = `${process.env.BASE_URL}/api/trpc`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/trpc`;
+        console.log(url);
 
         return {
             url
