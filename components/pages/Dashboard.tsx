@@ -6,10 +6,17 @@ import {ListsProp} from 'lib/types';
 import {NextPage} from 'next';
 import {UserButton, useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/router';
+import {trpc} from "../../lib/trpc";
+import {useEffect, useState} from "react";
+import {TodoList} from "@prisma/client";
 
-const Dashboard: NextPage<ListsProp> = ({lists}) => {
+const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
     const {user} = useUser();
     const router = useRouter();
+
+    const listsQuery = trpc.useQuery([
+        "get-all-lists"
+    ]);
 
     return (
         <div className={style.container}>
@@ -29,7 +36,7 @@ const Dashboard: NextPage<ListsProp> = ({lists}) => {
                 <button onClick={() => router.push("/create-list")}>+</button>
             </div>
             <div id={style.allLists}>
-                {lists.map((list) => {
+                {(listsQuery.data?.lists ?? lists ?? []).map((list) => {
                     return <Link key={list.id} href={`/list?id=${list.id}`}>
                         <div className={style.list}>
                             <Icon path={mdiFormatListBulleted} className={style.listIcon}/>

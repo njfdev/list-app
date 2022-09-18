@@ -1,52 +1,57 @@
 import {SignedIn, SignedOut} from '@clerk/nextjs'
-import type {NextPage} from 'next'
-import {GetServerSideProps} from "next";
+import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import Head from 'next/head'
 import Dashboard from 'components/pages/Dashboard'
 import SignInPrompt from 'components/SignInPrompt'
+import {createSSGHelpers} from "@trpc/react/ssg";
+import {appRouter} from "./api/trpc/[trpc]";
 import {withServerSideAuth} from "@clerk/nextjs/ssr";
-import prisma from 'lib/prisma'
-import {ListsProp} from 'lib/types'
+import {ClerkLoaded, ClerkLoading} from "@clerk/clerk-react";
 
-export const getServerSideProps: GetServerSideProps = withServerSideAuth(async ({req, resolvedUrl}) => {
-    const {userId} = req.auth;
+export const getServerSideProps: GetServerSideProps = withServerSideAuth(
+    async (ctx) => {
+        const ssr = await createSSGHelpers({
+            router: appRouter,
+            // @ts-ignore
+            ctx
+        });
 
-    if (!userId) {
+        const listsQuery = await ssr.fetchQuery(
+            "get-all-lists"
+        );
+
         return {
-            props: {}
+            props: {
+                lists: listsQuery.lists ?? [],
+                noAuth: listsQuery.noAuth
+            }
         }
     }
+);
 
-    const lists = await prisma.todoList.findMany({
-        where: {
-            owner_id: userId
-        },
-        select: {
-            id: true,
-            title: true,
-        },
-    });
-
-    return {
-        props: {
-            lists,
-        }
-    }
-});
-
-const Home: NextPage<ListsProp> = ({lists}) => {
+const Home: NextPage = ({ lists, noAuth }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    console.log({ lists, noAuth });
     return (
         <div>
             <Head>
                 <title>NJF Lists</title>
             </Head>
 
-            <SignedIn>
-                <Dashboard lists={lists}/>
-            </SignedIn>
-            <SignedOut>
-                <SignInPrompt/>
-            </SignedOut>
+            <ClerkLoaded>
+                <SignedIn>
+                    <Dashboard lists={lists} />
+                </SignedIn>
+                <SignedOut>
+                    <SignInPrompt/>
+                </SignedOut>
+            </ClerkLoaded>
+
+            <ClerkLoading>
+                {noAuth &&
+                    <SignInPrompt/> ||
+                    <Dashboard lists={lists} />
+                }
+            </ClerkLoading>
         </div>
     )
 }

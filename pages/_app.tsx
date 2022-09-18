@@ -1,12 +1,14 @@
 import 'styles/globals.css';
 import 'styles/clerk.css';
 import type {AppProps} from 'next/app'
-import {ClerkProvider} from '@clerk/nextjs'
+import {ClerkProvider, useAuth} from '@clerk/nextjs'
 import PageLayout from 'components/Layouts/PageLayout';
 import {init} from '@socialgouv/matomo-next'
 import {useEffect} from 'react';
 import Head from 'next/head';
 import Tracker from "@openreplay/tracker";
+import {AppRouter} from "pages/api/trpc/[trpc]";
+import {withTRPC} from "@trpc/next";
 
 // Using the or operator so Typescript doesn't complain because env variables might be undefined sometimes
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL || '';
@@ -43,4 +45,14 @@ function MyApp({Component, pageProps}: AppProps) {
     );
 }
 
-export default MyApp
+export default withTRPC<AppRouter>({
+    config({ ctx }) {
+        const url = process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_ENV}/api/trpc`
+            : "http://localhost:3000/api/trpc";
+
+        return {
+            url
+        };
+    }
+})(MyApp);
