@@ -27,9 +27,9 @@ if (process.env.NODE_ENV !== "development") {
             enabled: true,
             recordHeadersAndBody: true
         },
-        environment: process.env.VERCEL_ENV === "preview" ?
-            "staging" :
-            process.env.NODE_ENV,
+        environment: process.env.VERCEL_ENV === "production" ?
+            "production" :
+            "staging",
     });
 
     H.getSessionURL().then(sessionUrl => {
