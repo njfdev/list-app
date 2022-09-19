@@ -25,7 +25,7 @@ const CreateTodoItem = async (
     }
 
     try {
-        const list = await prisma.todoList.findUniqueOrThrow({
+        const list = await prisma.list.findUniqueOrThrow({
             where: {
                 id: list_id,
             }
@@ -37,7 +37,7 @@ const CreateTodoItem = async (
         }
 
         // User owns provided list
-        await prisma.todoItem.create({
+        await prisma.listTask.create({
             data: {
                 task,
                 list: {
@@ -73,7 +73,7 @@ const UpdateTodoItem = async (
     }
 
     try {
-        await prisma.todoItem.updateMany({
+        await prisma.listTask.updateMany({
             where: {
                 id,
                 list: {
@@ -94,7 +94,7 @@ const UpdateTodoItem = async (
             useTLS: true,
         })
 
-        const task = await prisma.todoItem.findUniqueOrThrow({
+        const task = await prisma.listTask.findUniqueOrThrow({
             where: {
                 id,
             },
@@ -132,7 +132,7 @@ const GetAllTodoItems = async (
     }
 
     try {
-        const tasks = await prisma.todoItem.findMany({
+        const tasks = await prisma.listTask.findMany({
             where: {
                 list_id
             },

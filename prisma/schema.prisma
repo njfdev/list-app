@@ -9,21 +9,38 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model TodoList {
-  id          String      @id @default(uuid())
-  owner_id    String      @db.VarChar(32)
-  title       String
-  todos       TodoItem[]
-
-  @@map("todo_lists")
+enum ListType {
+    Todo
 }
 
-model TodoItem {
+model List {
+  id          String      @id @default(uuid())
+  owner_id    String      @db.VarChar(32)
+  type        ListType    @default(Todo)
+  editors     Editors[]
+  title       String
+  description String?
+  todos       ListTask[]
+
+  @@map("lists")
+}
+
+model ListTask {
   id        String    @id @default(uuid())
-  list      TodoList  @relation(fields: [list_id], references: [id], onDelete: Cascade)
+  list      List      @relation(fields: [list_id], references: [id], onDelete: Cascade)
   list_id   String
   completed Boolean   @default(false)
+  starred   Boolean   @default(false)
   task      String
 
-  @@map("todo_items")
+  @@map("list_tasks")
+}
+
+model Editors {
+  id        String    @id @default(uuid())
+  user_id   String    @db.VarChar(32)
+  list      List      @relation(fields: [list_id], references: [id], onDelete: Cascade)
+  list_id   String
+
+  @@map("editors")
 }

@@ -12,7 +12,7 @@ const CreateTodoList = async (
     res: NextApiResponse<ResponseData>
 ) => {
     const {userId} = req.auth;
-    const {title} = req.body;
+    const {title, description} = req.body;
 
     if (!userId) {
         res.status(401).json({message: "Please login to create a todo list."})
@@ -25,10 +25,11 @@ const CreateTodoList = async (
     }
 
     try {
-        const list = await prisma.todoList.create({
+        const list = await prisma.list.create({
             data: {
                 owner_id: userId,
                 title,
+                description,
             },
         });
 

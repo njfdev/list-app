@@ -1,7 +1,7 @@
 import {withServerSideAuth} from "@clerk/nextjs/ssr";
 import {GetServerSideProps, NextPage} from "next";
 import prisma from 'lib/prisma';
-import {TodoList} from "@prisma/client";
+import {List} from "@prisma/client";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (context) => {
     const id = context.query.id;
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (
     }
 
     try {
-        const list = await prisma.todoList.findUniqueOrThrow({
+        const list = await prisma.list.findUniqueOrThrow({
             where: {
                 id,
             },
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (
 });
 
 interface ListProp {
-    list: TodoList;
+    list: List;
 }
 
 const CreateListPage: NextPage<ListProp> = ({list}) => {

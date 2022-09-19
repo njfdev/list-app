@@ -152,8 +152,7 @@ const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSide
                 <>
                     <h2 style={{ margin: "0" }}>{list.title}</h2>
                     <h3 style={{ margin: "0", color: "#666666", fontSize: "auto", fontWeight: "normal" }}>
-                        Ipsum dolore nisi officia mollit ea sint esse culpa reprehenderit
-                        deserunt quis irure cillum.
+                        {list.description}
                     </h3>
                 </>
             }>

@@ -21,7 +21,7 @@ export const appRouter = trpc
                 }
             }
 
-            const lists = await prisma.todoList.findMany({
+            const lists = await prisma.list.findMany({
                 where: {
                     owner_id: userId
                 }
@@ -42,7 +42,7 @@ export const appRouter = trpc
             const list_id = input.id;
             const userId = ctx.req?.auth?.userId;
 
-            const list = await prisma.todoList.findUniqueOrThrow({
+            const list = await prisma.list.findUniqueOrThrow({
                 where: {
                     id: list_id,
                 },
@@ -51,6 +51,9 @@ export const appRouter = trpc
                     id: true,
                     owner_id: true,
                     todos: true,
+                    type: true,
+                    editors: true,
+                    description: true,
                 }
             });
 

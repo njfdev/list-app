@@ -41,8 +41,7 @@ const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
                             <Icon path={mdiFormatListBulleted} className={style.listIcon}/>
                             <div>
                                 <h3 className={style.listTitle}>{list.title}</h3>
-                                <p className={style.listDesc}>Ipsum dolore nisi officia mollit ea sint esse culpa
-                                    reprehenderit deserunt quis irure cillum.</p>
+                                <p className={style.listDesc}>{list.description}</p>
                             </div>
                         </div>
                     </Link>

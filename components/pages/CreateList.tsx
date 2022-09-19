@@ -46,6 +46,8 @@ const Dashboard: NextPage = () => {
                 <form action="/api/db/todo-lists" method="POST">
                     <label htmlFor="title">Todo List Title</label>
                     <input id="title" name="title" type='text'/>
+                    <label htmlFor="description">Description</label>
+                    <input id="description" name="description" type='text'/>
                     <br/>
                     <input className={style.createTodoListButton} type="submit" value="Create Todo List"/>
                 </form>
