@@ -8,8 +8,8 @@ import {UserButton, useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/router';
 import {trpc} from "../../lib/trpc";
 import {useEffect, useState} from "react";
-import {List} from "@prisma/client";
 import PageLayout from "../Layouts/PageLayout";
+import {List} from "@prisma/client";
 
 const Dashboard: NextPage<{ lists: List[] }> = ({ lists }) => {
     const {user} = useUser();
