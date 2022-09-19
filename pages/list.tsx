@@ -1,7 +1,6 @@
 import {GetServerSideProps, InferGetServerSidePropsType, NextPage} from "next";
 import prisma from "lib/prisma";
 import {withServerSideAuth} from "@clerk/nextjs/ssr";
-import {TodoItem, TodoList} from "@prisma/client";
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -13,6 +12,7 @@ import style from "styles/List.module.css";
 import {BsCheckLg} from "react-icons/bs";
 import {input} from "zod";
 import {TbClipboardText} from "react-icons/tb";
+import { ListTask } from "@prisma/client";
 
 export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (ctx) => {
     const list_id = ctx.query.id;
@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = withServerSideAuth(async (
 
 const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     if (list) {
-        const [tasks, setTasks] = useState<TodoItem[]>(list.todos);
+        const [tasks, setTasks] = useState<ListTask[]>(list.todos);
         const [users, setUsers] = useState<any[]>([]);
 
         const router = useRouter();
@@ -90,7 +90,7 @@ const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSide
             setTasks(json.data);
         }
 
-        const clickCheckBox = async (thisTask: TodoItem) => {
+        const clickCheckBox = async (thisTask: ListTask) => {
             // Make click appear instantly to give good user feedback
             const updatedTasks = tasks;
             const updatedThisTask = thisTask;
@@ -172,7 +172,7 @@ const List: NextPage = ({list}: InferGetServerSidePropsType<typeof getServerSide
                     </Link>
                 </div>
                 <ol id={style.list}>
-                    {tasks.map((task: TodoItem) => {
+                    {tasks.map((task: ListTask) => {
                         return (
                             <li className={style.task} key={task.id}>
                                 <TbClipboardText className={style.icon} />

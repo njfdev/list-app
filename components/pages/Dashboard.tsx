@@ -8,10 +8,10 @@ import {UserButton, useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/router';
 import {trpc} from "../../lib/trpc";
 import {useEffect, useState} from "react";
-import {TodoList} from "@prisma/client";
+import {List} from "@prisma/client";
 import PageLayout from "../Layouts/PageLayout";
 
-const Dashboard: NextPage<{ lists: TodoList[] }> = ({ lists }) => {
+const Dashboard: NextPage<{ lists: List[] }> = ({ lists }) => {
     const {user} = useUser();
     const router = useRouter();
 

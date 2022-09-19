@@ -54,7 +54,7 @@ const GetAllTodoLists = async (
     }
 
     try {
-        const data = await prisma.todoList.findMany({
+        const data = await prisma.list.findMany({
             where: {
                 owner_id: userId,
             },
@@ -88,7 +88,7 @@ const DeleteTodoList = async (
 
     try {
         // We use deleteMany because otherwise we can't specify owner_id due to it not being unique. This should only ever
-        const data = await prisma.todoList.deleteMany({
+        const data = await prisma.list.deleteMany({
             where: {
                 id: list_id,
                 owner_id: userId,
@@ -122,7 +122,7 @@ const UpdateTodoListTitle = async (
 
     try {
         // We use deleteMany because otherwise we can't specify owner_id due to it not being unique. This should only ever
-        const data = await prisma.todoList.updateMany({
+        const data = await prisma.list.updateMany({
             where: {
                 id: list_id,
                 owner_id: userId,

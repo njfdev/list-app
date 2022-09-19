@@ -14,7 +14,7 @@ const handler = withAuth(async (
 
         const list_id = channel.replace(/^(presence-list-)/, '');
 
-        const list = await prisma?.todoList.findUniqueOrThrow({
+        const list = await prisma?.list.findUniqueOrThrow({
             where: {
                 id: list_id,
             }
